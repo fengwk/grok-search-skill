@@ -20,7 +20,7 @@ Search public webpages and X using Grok through CPA. Writes one JSON result to s
 --max-turns <n>  Maximum server-side search turns; positive integer (default: ${DEFAULT_MAX_TURNS}).
 --verbose        Include token usage, the turn limit, and search tool counters.
 
-Environment: GROK_SEARCH_BASE_URL (trusted HTTPS CPA API base URL ending in /v1), CPA_API_KEY.
+Environment: GROK_SEARCH_BASE_URL (trusted HTTPS CPA API base URL ending in /v1), GROK_SEARCH_API_KEY.
 Exit codes: 0 ok, 1 partial or unverified, 2 error.
 `;
 
@@ -153,8 +153,8 @@ export async function search(query, env = process.env, request = globalThis.fetc
     return fail('invalid_max_turns', '--max-turns must be a positive integer. No request was sent.', `Use --max-turns ${DEFAULT_MAX_TURNS} or omit the option.`);
   }
   const baseUrl = env.GROK_SEARCH_BASE_URL?.trim();
-  const key = env.CPA_API_KEY?.trim();
-  const missing = [!baseUrl && 'GROK_SEARCH_BASE_URL', !key && 'CPA_API_KEY'].filter(Boolean);
+  const key = env.GROK_SEARCH_API_KEY?.trim();
+  const missing = [!baseUrl && 'GROK_SEARCH_BASE_URL', !key && 'GROK_SEARCH_API_KEY'].filter(Boolean);
   if (missing.length) return fail('config_missing', `Missing environment variables: ${missing.join(', ')}. No request was sent.`, 'Configure the trusted CPA endpoint and key as described in scripts/README.md.');
   const url = publicUrl(baseUrl);
   if (!url || url.protocol !== 'https:' || url.search || url.hash || !/\/v1\/?$/.test(url.pathname)) {

@@ -25,7 +25,7 @@ npx skills add fengwk/grok-search-skill --list
 **2. 配置。** 启动 Agent 前设置两个环境变量：
 
 - `GROK_SEARCH_BASE_URL`：CPA 的 HTTPS 地址，以 `/v1` 结尾。
-- `CPA_API_KEY`：CPA 访问密钥。
+- `GROK_SEARCH_API_KEY`：CPA 访问密钥。
 
 **3. 提问。** 重开 Agent 后直接提问：
 

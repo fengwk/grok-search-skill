@@ -4,7 +4,7 @@ import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { search } from '../grok-search.mjs';
 
-const env = { GROK_SEARCH_BASE_URL: 'https://proxy.example.test/v1/', CPA_API_KEY: 'test-secret' };
+const env = { GROK_SEARCH_BASE_URL: 'https://proxy.example.test/v1/', GROK_SEARCH_API_KEY: 'test-secret' };
 const query = 'Find recent Pi release notes.\nInclude official links.';
 const url = 'https://example.test/releases';
 const x = 'https://x.com/example/status/1';
@@ -118,7 +118,11 @@ test('rejects missing configuration or an insecure base URL before sending crede
   const request = () => assert.fail('no request should be sent');
   const missing = await search(query, {}, request);
   assert.equal(missing.error.code, 'config_missing');
-  assert.match(missing.error.message, /GROK_SEARCH_BASE_URL.*CPA_API_KEY/);
+  assert.match(missing.error.message, /GROK_SEARCH_BASE_URL.*GROK_SEARCH_API_KEY/);
+  // A shared CPA credential must never be used as a fallback.
+  const sharedKeyOnly = await search(query, { GROK_SEARCH_BASE_URL: env.GROK_SEARCH_BASE_URL, CPA_API_KEY: 'shared-test-key' }, request);
+  assert.equal(sharedKeyOnly.error.code, 'config_missing');
+  assert.match(sharedKeyOnly.error.message, /Missing environment variables: GROK_SEARCH_API_KEY\./);
   const insecure = await search(query, { ...env, GROK_SEARCH_BASE_URL: 'http://proxy.example.test/v1' }, request);
   assert.equal(insecure.error.code, 'invalid_base_url');
 });

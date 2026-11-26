@@ -5,7 +5,7 @@
 | 变量 | 用途 |
 |---|---|
 | `GROK_SEARCH_BASE_URL` | 可信 CPA 地址，使用 HTTPS，末尾为 `/v1`，例如 `https://proxy.example.com/v1` |
-| `CPA_API_KEY` | 上述 CPA 的访问 Key；由运行环境注入，不写入命令参数或 Skill |
+| `GROK_SEARCH_API_KEY` | 上述 CPA 的访问 Key；由运行环境注入，不写入命令参数或 Skill |
 
 ```bash
 ./grok-search.mjs --query '查找 Pi 的最新发布说明' --max-turns 2
