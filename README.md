@@ -2,24 +2,32 @@
 
 通过 CLIProxyAPI（CPA）调用 Grok Agent，搜索公开网页和 X，返回带来源的答案。
 
-## 安装
+## 快速开始
 
-需要 Node.js 22+ 和 Git。
+**1. 安装。** 需要 Git 和 Node.js 22+。在项目目录执行：
 
 ```bash
 npx skills add fengwk/grok-search-skill
 ```
 
-加 `-g` 全局安装。
+全局安装：
 
-## 使用
+```bash
+npx skills add fengwk/grok-search-skill -g
+```
 
-启动 Agent 前设置两个环境变量：
+只查看可安装的技能：
+
+```bash
+npx skills add fengwk/grok-search-skill --list
+```
+
+**2. 配置。** 启动 Agent 前设置两个环境变量：
 
 - `GROK_SEARCH_BASE_URL`：CPA 的 HTTPS 地址，以 `/v1` 结尾。
 - `CPA_API_KEY`：CPA 访问密钥。
 
-重开 Agent 后直接提问：
+**3. 提问。** 重开 Agent 后直接提问：
 
 > 查一下 Pi 最新版本的发布说明和 X 上的公开讨论，附来源链接。
 
